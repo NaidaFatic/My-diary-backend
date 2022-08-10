@@ -17,6 +17,7 @@ exports.create = (req, res) => {
     ownerID: req.body.ownerID
   })
     .then(data => {
+
       // Create a post
       const posts = new Posts({
         name: req.body.name,
