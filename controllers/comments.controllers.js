@@ -13,8 +13,8 @@ exports.create = (req, res) => {
     }
     const comment = new Comments({
         description: req.body.description,
-        postID : req.params.postID, //TODO check if the user exists
-        ownerID : req.body.ownerID
+        postID: req.params.postID, //TODO check if the user exists
+        ownerID: req.body.ownerID
     });
 
     // Save comment in the database
@@ -35,8 +35,8 @@ exports.findAll = (req, res) => {
 
     //todo pagination
     Comments.find().sort({
-            'createdAt': 1
-        })
+        'createdAt': 1
+    })
         .then(data => {
             res.send(data);
         })
@@ -57,8 +57,10 @@ exports.findByPost = (req, res) => {
         .then(data => {
             post_id = data.id;
             Comments.find({
-                    postID: post_id
-                })
+                postID: post_id
+            }).sort({
+                'createdAt': -1
+            })
                 .then(data => {
                     if (!data)
                         res.status(404).send({
@@ -115,8 +117,8 @@ exports.update = (req, res) => {
     const id = req.params.id;
 
     Comments.findByIdAndUpdate(id, req.body, {
-            useFindAndModify: false
-        })
+        useFindAndModify: false
+    })
         .then(data => {
             if (!data) {
                 res.status(404).send({

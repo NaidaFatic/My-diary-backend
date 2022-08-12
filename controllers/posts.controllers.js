@@ -70,6 +70,8 @@ exports.findByOwner = (req, res) => {
 
   Posts.find({
     ownerID: id
+  }).sort({
+    'createdAt': -1
   })
     .then(data => {
       if (!data)
