@@ -18,6 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const db = require("./models");
+const { NativeDate } = require("mongoose");
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
@@ -43,6 +44,11 @@ require("./routes/comments.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
+const DB = process.env.DB_NAME;
+const DB_PASS = process.env.DB_PASS;
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
+  console.log(`Server is running db ${DB}.`);
+  console.log(`Server is running db pass ${DB_PASS}.`);
 });
