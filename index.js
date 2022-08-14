@@ -48,6 +48,4 @@ const DB = process.env.URL;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
-  console.log(`Server is running db ${DB}.`);
-  console.log(`Server is running db pass ${DB_PASS}.`);
 });
