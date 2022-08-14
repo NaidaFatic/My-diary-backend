@@ -220,8 +220,6 @@ exports.likes = (req, res) => {
           message: "Error retrieving posts with id " + idPost
         });
     });
-
-
 };
 
 // Update a Post by the id in the request

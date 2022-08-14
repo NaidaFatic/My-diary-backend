@@ -216,4 +216,122 @@ exports.delete = (req, res) => {
     });
 };
 
-//todo friends and friends requests
+// Update a owner send friend request
+exports.sendRequest = (req, res) => {
+
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Data to update can not be empty!"
+    });
+  }
+  const idOwner = req.params.id;
+  const id = req.body.friendID;
+
+  Owners.findById(idOwner)
+    .then(data => {
+      if (!data)
+        res.status(404).send({
+          message: "Not found profiles with id " + idOwner
+        });
+      else {
+        if (!data.friendsRequest.includes(id)) {
+          Owners.findOneAndUpdate({
+            _id: idOwner
+          }, {
+            $addToSet: {
+              friendsRequest: id
+            }
+          })
+            .then(data => {
+              if (!data) {
+                res.status(404).send({
+                  message: `Cannot update owner with id=${idOwner}. Maybe post was not found!`
+                });
+              } else {
+                res.send({
+                  message: "Request send!"
+                });
+              }
+            })
+            .catch(err => {
+              res.status(500).send({
+                message: "Error sending request"
+              });
+            });
+        } else {
+          res.send({
+            message: "Request send!"
+          });
+        }
+      }
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .send({
+          message: "Error sending request with id " + idOwner
+        });
+    });
+};
+
+// Update a owner add friend
+exports.addFriend = (req, res) => {
+
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Data to update can not be empty!"
+    });
+  }
+  const idOwner = req.params.id;
+  const id = req.body.friendID;
+
+  Owners.findById(idOwner)
+    .then(data => {
+      if (!data)
+        res.status(404).send({
+          message: "Not found profiles with id " + idOwner
+        });
+      else {
+        if (data.friendsRequest.includes(id) && data.friends.includes(id)) {
+          Owners.findOneAndUpdate({
+            _id: idOwner
+          }, {
+            $pull: {
+              friendsRequest: id
+            }, $addToSet: {
+              friends: id
+            }
+          })
+            .then(data => {
+              if (!data) {
+                res.status(404).send({
+                  message: `Cannot update owner with id=${idOwner}. Maybe post was not found!`
+                });
+              } else {
+                res.send({
+                  message: "Friend added!"
+                });
+              }
+            })
+            .catch(err => {
+              res.status(500).send({
+                message: "Error sending request"
+              });
+            });
+        } else {
+          res.send({
+            message: "Friend not found in friend request"
+          });
+        }
+      }
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .send({
+          message: "Error sending request with id " + idOwner
+        });
+    });
+
+
+};
