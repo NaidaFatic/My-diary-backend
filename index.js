@@ -6,7 +6,8 @@ const app = express();
 var corsOptions = {
   origin: "http://localhost:8080",
   origin: "http://localhost:3000",
-  origin: "https://my-diary-backend.vercel.app/"
+  origin: "https://my-diary-backend.vercel.app/",
+  origin: "https://my-diary-frontend.vercel.app/"
 };
 
 app.use(cors(corsOptions));
