@@ -4,10 +4,11 @@ const cors = require("cors");
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:8080",
-  origin: "http://localhost:3000",
-  origin: "https://my-diary-backend-api.herokuapp.com",
-  origin: "https://my-diary-frontend.vercel.app"
+  origin: ["http://localhost:8080",
+    "http://localhost:3000",
+    "https://my-diary-backend-api.herokuapp.com",
+    "https://my-diary-frontend.vercel.app"
+  ]
 };
 
 app.use(cors(corsOptions));
