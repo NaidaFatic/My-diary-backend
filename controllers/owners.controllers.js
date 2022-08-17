@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require("../config/env.config.js");
 const Owners = db.owners;
+const Diaries = db.diaries;
 
 //create jwt
 function encodeJWT(owner) {
@@ -56,6 +57,31 @@ exports.create = (req, res, callback) => {
         owner
           .save(owner)
           .then(data => {
+
+            // Create a diary
+            const diary = new Diaries({
+              ownerID: data._id
+            });
+            try {
+              Diaries.find({
+                ownerID: data._id
+              })
+                .then(data => {
+                  // Save diary in the database
+                  diary
+                    .save(diary)
+                    .catch(err => {
+                      res.status(500).send({
+                        message: err.message || "Some error occurred while creating the diary."
+                      });
+                    });
+                })
+                .catch(err => {
+                  res.status(500).send({
+                    message: err.message || "Some error occurred while retrieving diary."
+                  });
+                });
+            } catch (e) { console.log(e); }
             res.json({
               token: encodeJWT(data)
             });
@@ -292,7 +318,7 @@ exports.addFriend = (req, res) => {
           message: "Not found profiles with id " + idOwner
         });
       else {
-        if (data.friendsRequest.includes(id) && data.friends.includes(id)) {
+        if (data.friendsRequest.includes(id)) {
           Owners.findOneAndUpdate({
             _id: idOwner
           }, {
