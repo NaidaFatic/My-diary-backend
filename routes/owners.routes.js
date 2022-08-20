@@ -7,7 +7,7 @@ module.exports = app => {
   router.post("/", owners.create);
 
   // Retrieve all owners
-  router.get("/", owners.findAll);
+  router.get("/search", owners.findAll);
 
   // Retrieve a single owners with id
   router.get("/:id", owners.findOne);
