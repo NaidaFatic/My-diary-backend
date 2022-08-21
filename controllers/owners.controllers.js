@@ -106,7 +106,8 @@ exports.create = (req, res, callback) => {
 
 // Retrieve all Owners from the database.
 exports.findAll = (req, res) => {
-  const name = req.body.name.split(' ');
+  const name = req.query.name;
+  console.log(req.query.name)
   const firstName = name[0];
   const lastName = name[1];
 
@@ -126,7 +127,7 @@ exports.findAll = (req, res) => {
 
   Owners.find({ $and: [conditionFirstName, conditionLastName] })
     .then(data => {
-      console.log(conditionFirstName)
+      //console.log(conditionFirstName)
       res.send(data);
     })
     .catch(err => {
