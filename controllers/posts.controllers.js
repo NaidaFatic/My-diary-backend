@@ -48,19 +48,34 @@ exports.create = (req, res) => {
 
 // Retrieve all posts from the database.
 exports.findAll = (req, res) => {
+  const page = parseInt(req.query.page);
+  const limit = parseInt(req.query.limit);
 
-  //todo pagination
-  Posts.find().sort({
-    'createdAt': -1
-  })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while retrieving posts."
+  if (page && limit) {
+    Posts.find().sort({
+      'createdAt': -1
+    }).skip(page)
+      .limit(limit)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: err.message || "Some error occurred while retrieving posts."
+        });
       });
-    });
+  } else {
+    Posts.find().sort({
+      'createdAt': -1
+    }).limit(5)
+      .then(data => {
+        res.send(data);
+      }).catch(err => {
+        res.status(500).send({
+          message: err.message || "Some error occurred while retrieving posts."
+        });
+      });
+  }
 };
 
 // Find a posts by owner with an id

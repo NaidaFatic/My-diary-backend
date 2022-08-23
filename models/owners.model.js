@@ -25,7 +25,7 @@ module.exports = mongoose => {
       age: Number,
       diaryName: String,
       comment: String,
-      profilePic: Buffer,
+      profilePic: String,
       friends: [mongoose.ObjectId],
       friendsRequest: [mongoose.ObjectId]
     }, {

@@ -107,34 +107,37 @@ exports.create = (req, res, callback) => {
 // Retrieve all Owners from the database.
 exports.findAll = (req, res) => {
   const name = req.query.name;
-  console.log(req.query.name)
-  const firstName = name[0];
-  const lastName = name[1];
+  //console.log(req.query.name)
 
-  var conditionFirstName = firstName ? {
-    name: {
-      $regex: new RegExp(firstName),
-      $options: "i"
-    }
-  } : {};
+  if (name) {
+    const firstName = name[0];
+    const lastName = name[1];
 
-  var conditionLastName = lastName ? {
-    surname: {
-      $regex: new RegExp(lastName),
-      $options: "i"
-    }
-  } : {};
+    var conditionFirstName = firstName ? {
+      name: {
+        $regex: new RegExp(firstName),
+        $options: "i"
+      }
+    } : {};
 
-  Owners.find({ $and: [conditionFirstName, conditionLastName] })
-    .then(data => {
-      //console.log(conditionFirstName)
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while retrieving owners."
+    var conditionLastName = lastName ? {
+      surname: {
+        $regex: new RegExp(lastName),
+        $options: "i"
+      }
+    } : {};
+
+    Owners.find({ $and: [conditionFirstName, conditionLastName] })
+      .then(data => {
+        //console.log(conditionFirstName)
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: err.message || "Some error occurred while retrieving owners."
+        });
       });
-    });
+  }
 };
 
 // Find a single Owners with an id
