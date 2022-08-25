@@ -339,8 +339,20 @@ exports.addFriend = (req, res) => {
                   message: `Cannot update owner with id=${idOwner}. Maybe post was not found!`
                 });
               } else {
-                res.send({
-                  message: "Friend added!"
+                Owners.findOneAndUpdate({
+                  _id: id
+                }, {
+                  $addToSet: {
+                    friends: idOwner
+                  }
+                }).then(data => {
+                  res.send({
+                    message: "Friend added!"
+                  });
+                }).catch(err => {
+                  res.status(500).send({
+                    message: "Error sending request"
+                  });
                 });
               }
             })

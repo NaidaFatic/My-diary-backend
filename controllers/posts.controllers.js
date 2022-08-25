@@ -46,7 +46,7 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all posts from the database.
+// Retrieve all posts from friends the database.
 exports.findAll = (req, res) => {
   const page = parseInt(req.query.page);
   const limit = parseInt(req.query.limit);
