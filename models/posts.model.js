@@ -9,6 +9,10 @@ module.exports = mongoose => {
                 type: String,
                 default: "My post!"
             },
+            private: {
+                type: Boolean,
+                default: false
+            },
             description: {
                 type: String,
                 default: "This is my memory!"

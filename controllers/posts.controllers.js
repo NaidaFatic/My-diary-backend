@@ -24,7 +24,8 @@ exports.create = (req, res) => {
         ownerID: req.body.ownerID,
         description: req.body.description,
         diaryID: data.id,
-        picture: req.body.picture
+        picture: req.body.picture,
+        private: req.body.private
       });
 
       // Save post in the database
