@@ -25,6 +25,10 @@ module.exports = mongoose => {
             comments: [mongoose.ObjectId],
             picture: {
                 type: String
+            },
+            color: {
+                type: String,
+                default: "#c4c4c469"
             }
         }, {
             timestamps: true
