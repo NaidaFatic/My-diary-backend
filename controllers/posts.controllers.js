@@ -54,7 +54,7 @@ exports.findAll = (req, res) => {
   const limit = parseInt(req.query.limit);
 
   if (page && limit) {
-    Posts.find().sort({
+    Posts.find({ 'private': { $not: { $eq: true } } }).sort({
       'createdAt': -1
     }).skip(page)
       .limit(limit)
@@ -67,7 +67,7 @@ exports.findAll = (req, res) => {
         });
       });
   } else {
-    Posts.find().sort({
+    Posts.find({ 'private': { $not: { $eq: true } } }).sort({
       'createdAt': -1
     }).limit(5)
       .then(data => {
