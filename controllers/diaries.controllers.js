@@ -19,8 +19,8 @@ exports.create = (req, res) => {
   });
 
   Diaries.find({
-      ownerID: req.body.ownerID
-    })
+    ownerID: req.body.ownerID
+  })
     .then(data => {
       // Save diary in the database
       diary
@@ -80,7 +80,7 @@ exports.findOne = (req, res) => {
 // Find a diary by owner
 exports.findByOwner = (req, res) => {
 
-  Diaries.find({ownerID : req.params.id})
+  Diaries.find({ ownerID: req.params.id })
     .then(data => {
       if (!data)
         res.status(404).send({
@@ -108,8 +108,8 @@ exports.update = (req, res) => {
   const id = req.params.id;
 
   Diaries.findByIdAndUpdate(id, req.body, {
-      useFindAndModify: false
-    })
+    useFindAndModify: false
+  })
     .then(data => {
       if (!data) {
         res.status(404).send({
