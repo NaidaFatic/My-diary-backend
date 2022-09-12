@@ -107,27 +107,25 @@ exports.create = (req, res, callback) => {
 // Retrieve all Owners from the database.
 exports.findAll = (req, res) => {
   const name = req.query.name;
-  //console.log(req.query.name)
 
   if (name) {
-    const firstName = name[0];
-    const lastName = name[1];
-
-    var conditionFirstName = firstName ? {
+    var conditionFirstName = name ? {
       name: {
-        $regex: new RegExp(firstName),
+        $regex: new RegExp(name),
         $options: "i"
       }
     } : {};
 
-    var conditionLastName = lastName ? {
+    var conditionLastName = name ? {
       surname: {
-        $regex: new RegExp(lastName),
-        $options: "i"
+        $regex: new RegExp(name),
+        $options: "i" //not case sensitive
       }
     } : {};
 
-    Owners.find({ $and: [conditionFirstName, conditionLastName] })
+    Owners.find({ $or: [conditionFirstName, conditionLastName] }).sort({
+      'createdAt': -1
+    })
       .then(data => {
         //console.log(conditionFirstName)
         res.send(data);
