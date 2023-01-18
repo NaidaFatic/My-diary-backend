@@ -45,7 +45,7 @@ require("./routes/posts.routes")(app);
 require("./routes/comments.routes")(app);
 
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8081;
 const DB = process.env.URL;
 
 app.listen(PORT, () => {
