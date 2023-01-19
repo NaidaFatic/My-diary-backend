@@ -7,7 +7,8 @@ var corsOptions = {
   origin: ["http://localhost:8080",
     "http://localhost:3000",
     "https://my-diary-backend-api.herokuapp.com",
-    "https://my-diary-frontend.vercel.app"
+    "https://my-diary-frontend.vercel.app",
+    "http://onlinediarybackend1-env.eba-jcdedauh.eu-central-1.elasticbeanstalk.com"
   ]
 };
 
